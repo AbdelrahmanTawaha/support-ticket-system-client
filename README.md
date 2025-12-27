@@ -1,6 +1,6 @@
 # Support Ticket System - Client (Angular)
 
-Frontend client for the **Support Ticket System** project (T2 training), built to consume the ASP.NET Core Web API.
+Frontend client for the **Support Ticket System** project , built to consume the ASP.NET Core Web API.
 Includes authentication, role-based UI, ticket management dashboards, and real-time updates integration.
 
 ## Features

@@ -1,0 +1,276 @@
+
+
+<div class="users-page">
+
+  <div class="users-header">
+    <h2>{{ 'users.overviewTitle' | translate }}</h2>
+    <p class="subtitle">{{ 'users.overviewSub' | translate }}</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="toolbar">
+
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        [placeholder]="'users.searchPlaceholder' | translate"
+      />
+    </div>
+
+    <div class="filter-box">
+      <select [(ngModel)]="typeFilter" (change)="onTypeChange()">
+        <option value="All">{{ 'users.allTypes' | translate }}</option>
+        <option value="SupportManager">{{ 'users.managers' | translate }}</option>
+        <option value="SupportEmployee">{{ 'users.employees' | translate }}</option>
+        <option value="ExternalClient">{{ 'users.clients' | translate }}</option>
+      </select>
+    </div>
+
+    <div class="filter-box">
+      <select [(ngModel)]="activeFilter" (change)="onActiveChange()">
+        <option value="All">{{ 'users.allStatus' | translate }}</option>
+        <option value="Active">{{ 'users.active' | translate }}</option>
+        <option value="Inactive">{{ 'users.inactive' | translate }}</option>
+      </select>
+    </div>
+
+    <button class="btn-refresh" type="button" (click)="loadUsers()">
+      {{ 'common.refresh' | translate }}
+    </button>
+  </div>
+
+  <!-- Info -->
+  <div class="info-row">
+    <div *ngIf="loading" class="info loading">
+      {{ 'users.loadingUsers' | translate }}
+    </div>
+
+    <div *ngIf="!loading && errorMessage" class="info error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!loading && !errorMessage && filtered.length === 0" class="info empty">
+      {{ 'users.noUsersFound' | translate }}
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards" *ngIf="!loading && !errorMessage && filtered.length">
+
+    <div
+      class="user-card"
+      *ngFor="let u of filtered; trackBy: trackById"
+    >
+      <div class="card-glow"></div>
+
+      <div class="card-head">
+       <div class="avatar">
+  <ng-container *ngIf="u.imageUrl; else letterAvatar">
+   <img [src]="resolveImage(u.imageUrl)" [alt]="u.name" />
+  </ng-container>
+
+  <ng-template #letterAvatar>
+    {{ getAvatarLetter(u.name) }}
+  </ng-template>
+</div>
+
+
+        <div class="head-text">
+          <div class="name-row">
+            <span class="user-name">{{ u.name }}</span>
+            <span class="user-id">#{{ u.id }}</span>
+          </div>
+
+          <div class="meta-row">
+            <span class="type-badge" [ngClass]="getTypeClass(u.userType)">
+              {{ getTypeLabel(u.userType) }}
+            </span>
+
+            <span class="active-badge" [class.off]="!u.isActive">
+              {{ u.isActive ? ('users.active' | translate) : ('users.inactive' | translate) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="count-box">
+          <div class="count-label">{{ 'users.ticketsLabel' | translate }}</div>
+          <div class="count-value">{{ u.ticketsCount }}</div>
+        </div>
+
+        <div class="card-actions">
+
+          <!-- Edit -->
+          <button
+            *appHasRole="['SupportManager']"
+            class="edit-btn"
+            type="button"
+            [title]="'users.editUser' | translate"
+            (click)="openEdit(u)"
+          >
+            ✏️
+          </button>
+
+          <!-- Activate/Deactivate -->
+          <button
+            *appHasRole="['SupportManager']"
+            class="toggle-btn"
+            [class.danger]="u.isActive"
+            (click)="toggleActive(u)"
+            [disabled]="toggling[u.id]"
+          >
+            <span class="mini-spinner" *ngIf="toggling[u.id]"></span>
+            {{ u.isActive ? ('users.deactivate' | translate) : ('users.activate' | translate) }}
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+        PAGINATION BAR
+       ========================= -->
+  <div
+    class="pagination"
+    *ngIf="!loading && !errorMessage && totalCount > pageSize"
+  >
+    <button
+      type="button"
+      (click)="prevPage()"
+      [disabled]="pageNumber <= 1"
+    >
+      {{ 'pagination.prev' | translate }}
+    </button>
+
+    <span class="page-info">
+      {{ 'pagination.page' | translate }}
+      <strong>{{ pageNumber }}</strong>
+      <span class="separator">/</span>
+      <strong>{{ totalPages }}</strong>
+    </span>
+
+    <button
+      type="button"
+      (click)="nextPage()"
+      [disabled]="pageNumber >= totalPages"
+    >
+      {{ 'pagination.next' | translate }}
+    </button>
+  </div>
+
+</div>
+
+<!-- =========================
+      EDIT MODAL
+     ========================= -->
+
+<div class="modal-backdrop" *ngIf="editOpen" (click)="closeEdit()"></div>
+
+<div class="edit-modal" *ngIf="editOpen" (click)="$event.stopPropagation()">
+
+  <div class="edit-modal-head">
+    <div class="edit-title">
+      {{ 'users.editUser' | translate }}
+      <span class="edit-sub" *ngIf="selectedUserId">#{{ selectedUserId }}</span>
+    </div>
+
+    <button class="edit-close" type="button" (click)="closeEdit()">✕</button>
+  </div>
+
+  <div class="edit-modal-body">
+
+    <div *ngIf="editLoading" class="edit-loading">
+      {{ 'users.loadingUserData' | translate }}
+    </div>
+
+    <div *ngIf="!editLoading && editError" class="edit-error">
+      {{ editError }}
+    </div>
+
+    <form *ngIf="!editLoading" class="edit-form" (ngSubmit)="saveEdit()">
+
+      <label class="f-label">{{ 'register.fullName' | translate }}</label>
+      <input
+        class="f-input"
+        type="text"
+        [(ngModel)]="editModel.fullName"
+        name="fullName"
+      />
+
+      <label class="f-label">{{ 'register.email' | translate }}</label>
+      <input
+        class="f-input"
+        type="email"
+        [(ngModel)]="editModel.email"
+        name="email"
+      />
+
+      <label class="f-label">{{ 'register.phoneNumber' | translate }}</label>
+      <input
+        class="f-input"
+        type="text"
+        [(ngModel)]="editModel.phoneNumber"
+        name="phoneNumber"
+      />
+
+      <label class="f-label">{{ 'register.address' | translate }}</label>
+      <input
+        class="f-input"
+        type="text"
+        [(ngModel)]="editModel.address"
+        name="address"
+      />
+
+      <label class="f-label">{{ 'register.dateOfBirth' | translate }}</label>
+      <input
+        class="f-input"
+        type="date"
+        [(ngModel)]="editModel.dateOfBirth"
+        name="dateOfBirth"
+      />
+
+    
+      <label class="f-label">{{ 'addEmployee.imageUrl' | translate }}</label>
+
+     
+      <div class="image-preview" *ngIf="imagePreviewUrl">
+        <img [src]="imagePreviewUrl" alt="preview" />
+      </div>
+
+      <input
+        class="f-input file-input"
+        type="file"
+        accept=".jpg,.jpeg,.png,.webp,image/*"
+        (change)="onEditImageSelected($event)"
+      />
+
+      <small class="file-hint" *ngIf="selectedImageFile">
+        {{ selectedImageFile.name }}
+      </small>
+
+      <div class="edit-actions">
+        <button type="button" class="btn-cancel" (click)="closeEdit()">
+          {{ 'common.cancel' | translate }}
+        </button>
+
+        <button type="submit" class="btn-save" [disabled]="editSaving">
+          <span class="mini-spinner" *ngIf="editSaving"></span>
+          {{
+            editSaving
+              ? ('users.saving' | translate)
+              : ('users.saveChanges' | translate)
+          }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+

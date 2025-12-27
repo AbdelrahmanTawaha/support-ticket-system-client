@@ -1,0 +1,95 @@
+<div class="role-page">
+
+  <div class="page-head">
+    <div>
+      <h2>{{ 'tickets.createTicketTitle' | translate }}</h2>
+      <p class="sub">{{ 'tickets.createTicketSub' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-row">
+      <label>{{ 'tickets.titleLabel' | translate }}</label>
+      <input
+        class="input"
+        type="text"
+        [(ngModel)]="title"
+        [placeholder]="'tickets.titlePlaceholder' | translate"
+      />
+    </div>
+
+    <div class="form-row">
+      <label>{{ 'tickets.descriptionLabel' | translate }}</label>
+      <textarea
+        class="input textarea"
+        [(ngModel)]="description"
+        [placeholder]="'tickets.descriptionPlaceholder' | translate"
+      ></textarea>
+    </div>
+<!-- Attachments -->
+<div class="form-row">
+  <label>Attachments</label>
+
+  <input
+    class="input"
+    type="file"
+    multiple
+    (change)="onFilesSelected($event)"
+  />
+
+  <div class="attach-hint" *ngIf="selectedFiles.length">
+    {{ selectedFiles.length }} file(s) selected
+  </div>
+
+  <div class="attach-list" *ngIf="selectedFiles.length">
+    <div class="attach-item" *ngFor="let f of selectedFiles; let idx = index">
+      <span class="name">{{ f.name }}</span>
+      <span class="size">{{ formatBytes(f.size) }}</span>
+
+      <button type="button" class="remove" (click)="removeFile(idx)">
+        ✕
+      </button>
+    </div>
+  </div>
+</div>
+
+    <div class="form-row">
+      <label>{{ 'tickets.productLabel' | translate }}</label>
+
+      <select
+        class="input select"
+        [(ngModel)]="productId"
+      >
+        <option [ngValue]="0" disabled>
+          {{ 'tickets.productSelectPlaceholder' | translate }}
+        </option>
+
+        <option *ngFor="let p of products" [ngValue]="p.id">
+          {{ p.name }} <span *ngIf="p.code">({{ p.code }})</span>
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="error" class="form-error">
+      {{ error }}
+    </div>
+
+    <div class="actions">
+      <button class="ghost-btn" (click)="cancel()">
+        {{ 'common.cancel' | translate }}
+      </button>
+
+      <button class="primary-btn" (click)="submit()" [disabled]="loading">
+        {{
+          loading
+            ? ('addEmployee.creating' | translate)
+            : ('common.confirm' | translate)
+        }}
+      </button>
+    </div>
+
+    
+
+  </div>
+</div>

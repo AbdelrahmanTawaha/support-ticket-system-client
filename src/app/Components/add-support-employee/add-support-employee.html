@@ -1,0 +1,146 @@
+<!-- src/app/Components/add-support-employee/add-support-employee.html -->
+<div class="page">
+
+  <div class="page-head">
+    <div>
+      <h2>{{ 'addEmployee.pageTitle' | translate }}</h2>
+      <p>
+        {{ 'addEmployee.pageSub' | translate }}
+      </p>
+    </div>
+
+    <div class="head-actions">
+      <button class="btn-ghost" type="button" (click)="back()">
+        {{ 'addEmployee.backButton' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="section-title">
+      {{ 'addEmployee.userInfoSection' | translate }}
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>{{ 'addEmployee.fullName' | translate }}</label>
+        <input
+          type="text"
+          formControlName="fullName"
+          [placeholder]="'addEmployee.fullNamePlaceholder' | translate"
+        />
+        <small *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+          {{ 'addEmployee.fullNameError' | translate }}
+        </small>
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.email' | translate }}</label>
+        <input
+          type="email"
+          formControlName="email"
+          [placeholder]="'addEmployee.emailPlaceholder' | translate"
+        />
+        <small *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          {{ 'addEmployee.emailError' | translate }}
+        </small>
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.phoneNumber' | translate }}</label>
+        <input
+          type="text"
+          formControlName="phoneNumber"
+          [placeholder]="'addEmployee.phonePlaceholder' | translate"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.username' | translate }}</label>
+        <input type="text" formControlName="userName" />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.password' | translate }}</label>
+        <input
+          type="password"
+          formControlName="password"
+          [placeholder]="'addEmployee.passwordPlaceholder' | translate"
+        />
+        <small *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          {{ 'addEmployee.passwordError' | translate }}
+        </small>
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.address' | translate }}</label>
+        <input
+          type="text"
+          formControlName="address"
+          [placeholder]="'addEmployee.addressPlaceholder' | translate"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.dateOfBirth' | translate }}</label>
+        <input type="date" formControlName="dateOfBirth" />
+      </div>
+
+      <div class="field">
+  <label>{{ 'addEmployee.imageUrl' | translate }}</label>
+  <input
+    type="file"
+    accept=".jpg,.jpeg,.png,.webp"
+    (change)="onImageSelected($event)"
+  />
+</div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">
+      {{ 'addEmployee.employeeProfileSection' | translate }}
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>{{ 'addEmployee.employeeCode' | translate }}</label>
+        <input
+          type="text"
+          formControlName="employeeCode"
+          [placeholder]="'addEmployee.employeeCodePlaceholder' | translate"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.hireDate' | translate }}</label>
+        <input type="date" formControlName="hireDate" />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.salary' | translate }}</label>
+        <input type="number" formControlName="salary" min="0" />
+      </div>
+
+      <div class="field">
+        <label>{{ 'addEmployee.jobTitle' | translate }}</label>
+        <select formControlName="jobTitle">
+         
+          <option [value]="1">{{ 'addEmployee.jobTitleEmployee' | translate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? ('addEmployee.creating' | translate) : ('addEmployee.createEmployee' | translate) }}
+      </button>
+    </div>
+
+    <div class="msg success" *ngIf="success">{{ success }}</div>
+    <div class="msg error" *ngIf="error">{{ error }}</div>
+
+  </form>
+</div>

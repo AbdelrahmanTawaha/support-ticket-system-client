@@ -1,0 +1,199 @@
+<!-- src/app/Components/manager-dashboard/manager-dashboard.html -->
+
+<div class="dash-page">
+
+  <div class="dash-header">
+    <h2>{{ 'dashboard.title' | translate }}</h2>
+    <p class="subtitle">{{ 'dashboard.subtitle' | translate }}</p>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-refresh" (click)="load()">
+      {{ 'dashboard.refresh' | translate }}
+    </button>
+  </div>
+
+  <div class="info-row">
+    <div *ngIf="loading" class="info loading">
+      {{ 'dashboard.loading' | translate }}
+    </div>
+    <div *ngIf="!loading && errorMessage" class="info error">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <ng-container *ngIf="!loading && !errorMessage && data">
+
+    <!-- =========================
+         1) Counters
+         ========================= -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">{{ 'dashboard.totalTickets' | translate }}</div>
+        <div class="kpi-value">{{ totalTickets }}</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">{{ 'status.new' | translate }}</div>
+        <div class="kpi-value">{{ getCount('New') }}</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">{{ 'status.inProgress' | translate }}</div>
+        <div class="kpi-value">{{ getCount('InProgress') }}</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">{{ 'status.waitingClient' | translate }}</div>
+        <div class="kpi-value">{{ getCount('WaitingClient') }}</div>
+      </div>
+
+      <!--  Resolved removed -->
+
+      <div class="kpi-card">
+        <div class="kpi-label">{{ 'status.closed' | translate }}</div>
+        <div class="kpi-value">{{ getCount('Closed') }}</div>
+      </div>
+    </div>
+
+    <!-- =========================
+         2) Status Distribution Bars
+         ========================= -->
+    <div class="section">
+      <div class="section-title">{{ 'dashboard.statusDistribution' | translate }}</div>
+
+      <div class="status-bars">
+        <div class="status-row">
+          <span class="s-label">{{ 'status.new' | translate }}</span>
+          <div class="bar">
+            <span class="fill new" [style.width.%]="percent(getCount('New'))"></span>
+          </div>
+          <span class="s-value">
+            {{ getCount('New') }} ({{ percent(getCount('New')) }}%)
+          </span>
+        </div>
+
+        <div class="status-row">
+          <span class="s-label">{{ 'status.inProgress' | translate }}</span>
+          <div class="bar">
+            <span class="fill prog" [style.width.%]="percent(getCount('InProgress'))"></span>
+          </div>
+          <span class="s-value">
+            {{ getCount('InProgress') }} ({{ percent(getCount('InProgress')) }}%)
+          </span>
+        </div>
+
+        <div class="status-row">
+          <span class="s-label">{{ 'status.waitingClient' | translate }}</span>
+          <div class="bar">
+            <span class="fill wait" [style.width.%]="percent(getCount('WaitingClient'))"></span>
+          </div>
+          <span class="s-value">
+            {{ getCount('WaitingClient') }} ({{ percent(getCount('WaitingClient')) }}%)
+          </span>
+        </div>
+
+        <!--  Resolved removed -->
+
+        <div class="status-row">
+          <span class="s-label">{{ 'status.closed' | translate }}</span>
+          <div class="bar">
+            <span class="fill close" [style.width.%]="percent(getCount('Closed'))"></span>
+          </div>
+          <span class="s-value">
+            {{ getCount('Closed') }} ({{ percent(getCount('Closed')) }}%)
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+         3) Trend (last 30 days)
+         ========================= -->
+    <div class="section">
+      <div class="section-title">{{ 'dashboard.trendTitle' | translate }}</div>
+
+      <div class="trend-wrap">
+        <div
+          class="trend-bar"
+          *ngFor="let p of data.trend"
+          title="{{ p.day }} : {{ p.count }}"
+        >
+          <span class="trend-fill" [style.height.%]="trendHeight(p.count)"></span>
+        </div>
+      </div>
+
+      <div class="trend-hint">
+        {{ 'dashboard.trendHint' | translate }}
+      </div>
+    </div>
+
+    <!-- =========================
+         4) Top Employees
+         ========================= -->
+    <div class="section">
+      <div class="section-title">{{ 'dashboard.topEmployees' | translate }}</div>
+
+      <div class="top-grid">
+        <div class="top-card" *ngFor="let e of data.topEmployees">
+          <div class="top-head">
+
+            <span class="avatar">
+              <ng-container *ngIf="resolveImage(e.imageUrl) as imgUrl; else letterAvatar">
+                <img
+                  [src]="imgUrl"
+                  [alt]="e.name"
+                  class="avatar-img"
+                  loading="lazy"
+                />
+              </ng-container>
+
+              <ng-template #letterAvatar>
+                <span class="avatar-letter">
+                  {{ (e.name || 'U').charAt(0).toUpperCase() }}
+                </span>
+              </ng-template>
+            </span>
+
+            <div class="emp-meta">
+              <div class="emp-name">{{ e.name }}</div>
+              <div class="emp-id">#{{ e.id }}</div>
+            </div>
+          </div>
+
+          <div class="top-body">
+            <div class="mini">
+              <span class="m-label">{{ 'dashboard.assigned' | translate }}</span>
+              <span class="m-value">{{ e.assignedCount }}</span>
+            </div>
+
+            <!--  Resolved removed -->
+
+            <div class="mini">
+              <span class="m-label">{{ 'dashboard.closed' | translate }}</span>
+              <span class="m-value">{{ e.closedCount }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+         5) Tickets by Product
+         ========================= -->
+    <div class="section">
+      <div class="section-title">{{ 'dashboard.ticketsByProduct' | translate }}</div>
+
+      <div class="product-bars">
+        <div class="p-row" *ngFor="let p of data.ticketsByProduct">
+          <span class="p-name">{{ p.productName }}</span>
+          <div class="bar">
+            <span class="fill prod" [style.width.%]="percent(p.count)"></span>
+          </div>
+          <span class="p-count">{{ p.count }}</span>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

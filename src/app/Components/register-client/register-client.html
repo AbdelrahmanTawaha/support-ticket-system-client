@@ -1,0 +1,141 @@
+<div class="register-page">
+  <div class="register-card">
+
+    <div class="avatar-wrap">
+      <div class="avatar-circle">
+        <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" class="avatar-img" alt="Profile" />
+        <span *ngIf="!imagePreviewUrl" class="avatar-icon">👤</span>
+      </div>
+
+      <h2>{{ 'register.title' | translate }}</h2>
+      <p>{{ 'register.subtitle' | translate }}</p>
+
+      <!-- image picker -->
+      <div class="avatar-actions">
+        <label class="file-pick">
+          <input type="file" accept="image/*" (change)="onImageSelected($event)" />
+          Upload photo
+        </label>
+
+        <span class="file-hint" *ngIf="selectedImage">
+          {{ selectedImage.name }}
+        </span>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="grid">
+
+        <div class="field">
+          <label> {{ 'register.fullName' | translate }} <span class="req">*</span> </label>
+          <input type="text" formControlName="fullName"
+                 [placeholder]="'register.fullNamePlaceholder' | translate"
+                 [class.invalid]="c('fullName')?.touched && c('fullName')?.invalid" />
+          <small *ngIf="c('fullName')?.touched && c('fullName')?.invalid">
+            {{ 'register.fullNameRequired' | translate }}
+          </small>
+        </div>
+
+        <div class="field">
+          <label> {{ 'register.email' | translate }} <span class="req">*</span> </label>
+          <input type="email" formControlName="email"
+                 [placeholder]="'register.emailPlaceholder' | translate"
+                 [class.invalid]="c('email')?.touched && c('email')?.invalid" />
+          <small *ngIf="c('email')?.touched && c('email')?.invalid">
+            {{ 'register.emailRequired' | translate }}
+          </small>
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.phoneNumber' | translate }}</label>
+          <input type="text" formControlName="phoneNumber"
+                 [placeholder]="'register.phonePlaceholder' | translate" />
+        </div>
+
+        <!-- Username required -->
+        <div class="field">
+          <label> Username <span class="req">*</span> </label>
+          <input type="text" formControlName="userName"
+                 [class.invalid]="c('userName')?.touched && c('userName')?.invalid" />
+          <small *ngIf="c('userName')?.touched && c('userName')?.invalid">
+            Username is required (min 3).
+          </small>
+        </div>
+
+        <div class="field">
+          <label> {{ 'register.password' | translate }} <span class="req">*</span> </label>
+          <input type="password" formControlName="password"
+                 [placeholder]="'register.passwordPlaceholder' | translate"
+                 [class.invalid]="c('password')?.touched && c('password')?.invalid" />
+          <small *ngIf="c('password')?.touched && c('password')?.invalid">
+            {{ 'register.passwordHint' | translate }}
+          </small>
+        </div>
+
+        <div class="field">
+          <label> {{ 'register.confirmPassword' | translate }} <span class="req">*</span> </label>
+          <input type="password" formControlName="confirmPassword"
+                 [placeholder]="'register.confirmPasswordPlaceholder' | translate"
+                 [class.invalid]="(c('confirmPassword')?.touched && c('confirmPassword')?.invalid) || (form.touched && form.errors?.['passwordMismatch'])" />
+          <small *ngIf="form.touched && form.errors?.['passwordMismatch']">
+            Passwords do not match.
+          </small>
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.address' | translate }}</label>
+          <input type="text" formControlName="address"
+                 [placeholder]="'register.addressPlaceholder' | translate" />
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.dateOfBirth' | translate }}</label>
+          <input type="date" formControlName="dateOfBirth" />
+        </div>
+
+        <div class="field span-2">
+          <label> {{ 'register.companyName' | translate }} <span class="req">*</span> </label>
+          <input type="text" formControlName="companyName"
+                 [placeholder]="'register.companyNamePlaceholder' | translate"
+                 [class.invalid]="c('companyName')?.touched && c('companyName')?.invalid" />
+          <small *ngIf="c('companyName')?.touched && c('companyName')?.invalid">
+            {{ 'register.companyNameRequired' | translate }}
+          </small>
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.companyAddress' | translate }}</label>
+          <input type="text" formControlName="companyAddress"
+                 [placeholder]="'register.companyAddressPlaceholder' | translate" />
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.vatNumber' | translate }}</label>
+          <input type="text" formControlName="vatNumber" />
+        </div>
+
+        <div class="field">
+          <label>{{ 'register.preferredLanguage' | translate }}</label>
+          <select formControlName="preferredLanguage">
+            <option value="en">{{ 'register.langEn' | translate }}</option>
+            <option value="ar">{{ 'register.langAr' | translate }}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="btn-secondary" type="button" (click)="goLogin()">
+          {{ 'register.backToLogin' | translate }}
+        </button>
+
+        <button class="btn-primary" type="submit" [disabled]="loading">
+          {{ loading ? ('register.creating' | translate) : ('register.createAccount' | translate) }}
+        </button>
+      </div>
+
+      <div class="msg success" *ngIf="success">{{ success }}</div>
+      <div class="msg error" *ngIf="error">{{ error }}</div>
+    </form>
+  </div>
+</div>

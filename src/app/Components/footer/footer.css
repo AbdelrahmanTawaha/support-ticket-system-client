@@ -1,0 +1,17 @@
+
+
+.app-footer {
+  padding: 0.6rem 1.75rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  border-top: 1px solid #1f2937;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  background: #020617;
+}
+
+.footer-separator {
+  opacity: 0.6;
+}

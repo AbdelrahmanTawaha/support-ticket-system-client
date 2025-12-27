@@ -1,1 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/app/app.component.css */
+
+/* خليه block بدون إجبار ارتفاع */
+:host {
+  display: block;
+}
+
+/* الهيكل العام للتطبيق */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  /* نفس الثيم */
+  background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* المحتوى الرئيسي */
+.app-main {
+  flex: 1;
+
+  /* padding متوازن حتى ما يطلع فراغات كبيرة */
+  padding: 24px 0;
+
+  /* مهم: لا تعمل overflow هنا إلا إذا تحتاجه فعلاً */
+  /* overflow-y: auto; */
+}
+
+/* لو بدك padding داخلي موحد لكل الصفحات */
+.app-main > * {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 16px 0;
+  }
+
+  .app-main > * {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+/* ============== Global Theme Base ============== */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #e9eef7;
+  background: radial-gradient(1200px 800px at 20% 10%, #1a2440 0%, transparent 60%),
+              radial-gradient(900px 700px at 80% 20%, #0e3b3b 0%, transparent 55%),
+              linear-gradient(180deg, #070b14 0%, #0a1222 50%, #070b14 100%);
+  background-attachment: fixed;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* تحسين الإحساس العام */
+* {
+  box-sizing: border-box;
+}
+/* =========================
+   Global Page Base (Non-Home)
+========================= */
+.role-page,
+.users-page,
+.dash-page,
+.employee-page,
+.client-page,
+.register-page,
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  background: transparent; /* مهم */
+  color: #e5e7eb;
+}
+
+/* طبقة خلفية ناعمة للصفحات */
+.role-page::before,
+.users-page::before,
+.dash-page::before,
+.employee-page::before,
+.client-page::before,
+.register-page::before,
+.auth-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(900px 500px at 12% 10%, rgba(56,189,248,0.08), transparent 60%),
+    radial-gradient(900px 500px at 90% 15%, rgba(167,139,250,0.08), transparent 60%),
+    radial-gradient(900px 600px at 50% 90%, rgba(34,197,94,0.06), transparent 60%);
+}
+
+/* يضمن أن محتوى الصفحة فوق الخلفية */
+.role-page > *,
+.users-page > *,
+.dash-page > *,
+.employee-page > *,
+.client-page > *,
+.register-page > *,
+.auth-page > * {
+  position: relative;
+  z-index: 1;
+}
+/* =========================
+   GLOBAL APP BACKGROUND
+========================= */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  color: #e9eef7;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, #1a2440 0%, transparent 60%),
+    radial-gradient(900px 700px at 80% 20%, #0e3b3b 0%, transparent 55%),
+    linear-gradient(180deg, #070b14 0%, #0a1222 50%, #070b14 100%);
+  background-attachment: fixed;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }

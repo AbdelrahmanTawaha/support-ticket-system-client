@@ -1,0 +1,282 @@
+<div class="tickets-page">
+
+  <div class="tickets-header">
+    <h2>Support Tickets</h2>
+    <p class="subtitle">Manage client support tickets with filtering & pagination.</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="toolbar">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search by title or client..."
+      />
+    </div>
+
+    <div class="status-filter">
+      <select [(ngModel)]="statusFilter" (change)="onStatusChange()">
+        <option *ngFor="let s of ticketStatuses" [ngValue]="s.value">
+          {{ s.label }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-refresh" (click)="refresh()">Refresh</button>
+  </div>
+
+  <!-- Info -->
+  <div
+    class="info-row"
+    *ngIf="{
+      loading:      (loading$      | async),
+      errorMessage: (errorMessage$ | async),
+      tickets:      (tickets$      | async)
+    } as vm"
+  >
+    <div *ngIf="vm.loading" class="info loading">Loading tickets...</div>
+
+    <div *ngIf="!vm.loading && vm.errorMessage" class="info error">
+      {{ vm.errorMessage }}
+    </div>
+
+    <div
+      *ngIf="!vm.loading && !vm.errorMessage && (!vm.tickets || vm.tickets.length === 0)"
+      class="info empty"
+    >
+      No tickets found.
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper" *ngIf="(tickets$ | async) as tickets">
+    <table class="tickets-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Client</th>
+          <th>Assigned To</th>
+          <th>Product</th>
+          <th>Created At</th>
+          <th class="assign-col">Assign</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let t of tickets; let i = index">
+
+          <td>{{ (pageNumber - 1) * pageSize + i + 1 }}</td>
+
+          <td class="title-cell">
+            <span class="ticket-title" (click)="openDetails(t.id)">
+              {{ t.title }}
+            </span>
+            <div class="ticket-desc" *ngIf="t.description">
+              {{ t.description }}
+            </div>
+          </td>
+
+          <td>
+            <span class="status-chip" [ngClass]="getStatusClass(t.status)">
+              {{ getStatusLabel(t.status) }}
+            </span>
+          </td>
+
+          <td>{{ t.clientName || '-' }}</td>
+          <td>{{ t.assignedEmployeeName || '-' }}</td>
+          <td>{{ t.productName || '-' }}</td>
+          <td>{{ t.createdAt | date: 'short' }}</td>
+
+          <!-- ✅ASSIGN -->
+          <td class="assign-cell">
+            <div
+              class="assign-compact"
+              [class.opened]="openAssignFor === t.id"
+              (click)="$event.stopPropagation()"
+            >
+
+              <!-- Current Assignee Badge -->
+              <span
+                class="assignee-chip"
+                [class.unassigned]="!t.assignedEmployeeName"
+                [class.assigned]="!!t.assignedEmployeeName"
+                title="Current Assignee"
+              >
+                <span class="dot"></span>
+                {{ t.assignedEmployeeName || 'Unassigned' }}
+              </span>
+
+              <!-- Trigger -->
+             <button
+  class="assign-trigger"
+  type="button"
+  (click)="toggleAssignMenu(t.id, $event)"
+  [disabled]="!employees?.length || isAssigned(t)"
+  [title]="isAssigned(t) ? 'Already assigned - cannot change' : 'Assign ticket'"
+>
+  {{ isAssigned(t) ? 'Assigned' : 'Assign' }}
+  <span class="chev" [class.open]="openAssignFor === t.id">▾</span>
+</button>
+
+
+              <!-- Popover -->
+              <div
+                class="assign-pop"
+                *ngIf="openAssignFor === t.id"
+                (click)="$event.stopPropagation()"
+              >
+                <div class="assign-pop-header">
+                  <span class="mini-title">Assign Ticket</span>
+                  <button
+                    type="button"
+                    class="mini-close"
+                    (click)="closeAssignMenu($event)"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <input
+                  class="assign-pop-search"
+                  type="text"
+                  placeholder="Search employee..."
+                  [(ngModel)]="employeeSearch"
+                  (click)="$event.stopPropagation()"
+                />
+
+                <div class="emp-list" *ngIf="filteredEmployees.length; else noEmps">
+
+                  <button
+                    type="button"
+                    class="emp-item"
+                    *ngFor="let e of filteredEmployees"
+                    [class.active]="selectedEmployee[t.id] === e.id"
+                    (click)="selectEmployee(t.id, e.id)"
+                  >
+                    <div class="emp-left">
+                      <span class="emp-avatar">{{ getInitials(e.name) }}</span>
+                      <span class="emp-name">{{ e.name }}</span>
+                    </div>
+
+                    <span class="emp-check" *ngIf="selectedEmployee[t.id] === e.id">✓</span>
+                  </button>
+
+                </div>
+
+                <ng-template #noEmps>
+                  <div class="assign-pop-hint">
+                    No active support employees found.
+                  </div>
+                </ng-template>
+<!--  AI Suggest -->
+<div class="ai-box" (click)="$event.stopPropagation()">
+
+  <div class="ai-head">
+    <span class="ai-title">AI Suggestion</span>
+
+    <button
+      type="button"
+      class="ai-btn"
+      (click)="runAiSuggest(t.id, $event)"
+      [disabled]="aiLoading[t.id]"
+    >
+      <span class="spinner" *ngIf="aiLoading[t.id]"></span>
+      {{ aiLoading[t.id] ? 'Thinking...' : 'Suggest with AI' }}
+    </button>
+  </div>
+
+  <div class="ai-error" *ngIf="aiError[t.id]">
+    {{ aiError[t.id] }}
+  </div>
+
+  <div class="ai-card" *ngIf="aiSuggest[t.id] as s">
+    <div class="ai-row">
+      <span class="ai-label">Suggested:</span>
+      <span class="ai-value">
+        {{ s.suggestedEmployeeName || ('Employee #' + s.suggestedEmployeeId) || '-' }}
+      </span>
+    </div>
+
+    <div class="ai-row">
+      <span class="ai-label">Confidence:</span>
+      <span class="ai-value">{{ (s.confidence * 100) | number:'1.0-0' }}%</span>
+    </div>
+
+    <div class="ai-reason" *ngIf="s.reason">
+      {{ s.reason }}
+    </div>
+
+    <div class="ai-warn" *ngIf="s.isFallback || s.warning">
+      {{ s.warning || 'Fallback suggestion was used.' }}
+    </div>
+
+    <button
+      type="button"
+      class="ai-use"
+      (click)="applyAiSuggestion(t.id, $event)"
+      [disabled]="!s.suggestedEmployeeId"
+    >
+      Use suggestion
+    </button>
+  </div>
+
+</div>
+
+                <div class="assign-pop-footer">
+                  <button
+                    class="assign-pop-clear"
+                    type="button"
+                    (click)="clearEmployee(t.id)"
+                    [disabled]="!selectedEmployee[t.id]"
+                  >
+                    Clear
+                  </button>
+
+                  <button
+                    class="assign-pop-btn"
+                    type="button"
+                    (click)="assignTicket(t, $event)"
+                    [disabled]="!selectedEmployee[t.id] || assigning[t.id]"
+                  >
+                    <span class="spinner" *ngIf="assigning[t.id]"></span>
+                    {{ assigning[t.id] ? 'Assigning...' : 'Confirm' }}
+                  </button>
+                </div>
+
+              </div>
+              <!-- /Popover -->
+
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="(totalCount$ | async) as totalCount">
+    <button (click)="prevPage(totalCount)" [disabled]="pageNumber === 1">
+      &laquo; Prev
+    </button>
+
+    <span class="page-info">
+      Page {{ pageNumber }} of
+      {{ totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1 }}
+      <span class="separator">·</span>
+      {{ totalCount }} tickets
+    </span>
+
+    <button
+      (click)="nextPage(totalCount)"
+      [disabled]="pageNumber >= (totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1)"
+    >
+      Next &raquo;
+    </button>
+  </div>
+
+</div>

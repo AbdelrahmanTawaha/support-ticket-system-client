@@ -1,0 +1,315 @@
+{
+
+  "common": {
+        "LANG": "عربي",
+
+    "back": "رجوع",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "clear": "مسح",
+    "refresh": "تحديث",
+    "search": "بحث",
+    "loading": "جارٍ التحميل...",
+    "noData": "لا توجد بيانات",
+    "optional": "اختياري",
+    "edit" : "تعديل",
+    "saving":"حفظ التعديل",
+        "save":"حفظ "
+
+  },
+
+  "status": {
+    "new": "جديدة",
+    "inProgress": "قيد المعالجة",
+    "waitingClient": "بانتظار العميل",
+    "resolved": "تم الحل",
+    "closed": "مغلقة",
+    "unassigned": "غير مسندة"
+  },
+
+  "pagination": {
+    "prev": "السابق",
+    "next": "التالي",
+    "page": "صفحة",
+    "of": "من",
+    "ticketsCount": "{{count}} تذكرة"
+  },
+
+  "header": {
+    "brandTitle": "نظام تذاكر الدعم",
+    "brandSubtitle": "إدارة • تتبع • حل",
+    "home": "الرئيسية",
+    "tickets": "التذاكر",
+    "users": "المستخدمون",
+    "dashboard": "لوحة التحكم",
+    "myAssigned": "تذاكري المسندة",
+    "myTickets": "تذاكري",
+    "addEmployee": "+ إضافة موظف",
+    "register": "تسجيل",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "userFallback": "مستخدم"
+  },
+
+  "footer": {
+    "copyright": "© {{year}} نظام تذاكر الدعم",
+    "tagline": "مصمم لفرق دعم ذكية"
+  },
+
+  "home": {
+    "badge": "جاهزون دائمًا • موثوقون دائمًا",
+    "titleLine1": "دعم يتحرك",
+    "titleLine2": "معك",
+    "lead": "نحن هنا لجعل كل شيء أكثر سلاسة وسرعة ووضوحًا. بلا ضجيج ولا تأخير — تجربة مصقولة مبنية على وقتك وراحة بالك. عندما تحتاج مساعدة أو توجيهًا أو حلًا سريعًا ستجد فريقًا حاضرًا فعلًا.",
+    "startNow": "ابدأ الآن",
+    "continue": "تابع بثقة",
+    "explore": "استكشف التجربة",
+    "welcome": "أهلًا، {{userName}}",
+    "role": "{{role}}",
+    "kpi1Title": "خدمة تضعك أولًا",
+    "kpi1Sub": "احترام • وضوح • ثبات",
+    "kpi2Title": "سرعة بلا ضغط",
+    "kpi2Sub": "إجابات أسرع ونتائج أسلس",
+    "kpi3Title": "ثقة بتصميم ذكي",
+    "kpi3Sub": "تجربة حديثة يمكنك الاعتماد عليها",
+    "missionNote": "مهمتنا بسيطة: إزالة التعقيد، حماية وقتك، وتقديم دعم يبدو سهلًا كل يوم."
+  },
+
+  "auth": {
+    "loginTitle": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "rememberMe": "تذكرني",
+    "forgotPasswordLink": "نسيت كلمة المرور؟",
+    "forgotPasswordTitle": "نسيت كلمة المرور",
+    "forgotPasswordSub": "أدخل اسم المستخدم أو البريد الإلكتروني. سنرسل لك رمز إعادة التعيين.",
+    "usernameOrEmail": "اسم المستخدم أو البريد الإلكتروني",
+    "usernameOrEmailPlaceholder": "اسم المستخدم أو البريد",
+    "sendCode": "إرسال الرمز",
+    "sending": "جارٍ الإرسال...",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+    "resetPasswordSub": "أدخل الرمز المرسل إلى بريدك ثم ضع كلمة المرور الجديدة.",
+    "resetCode": "رمز إعادة التعيين",
+    "resetCodePlaceholder": "رمز من 6 أرقام",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "changePassword": "تغيير كلمة المرور",
+    "saving": "جارٍ الحفظ...",
+    "resendCode": "إعادة إرسال الرمز"
+  },
+
+  "register": {
+    "title": "إنشاء حساب عميل",
+    "subtitle": "سجّل كعميل لإنشاء تذاكر الدعم وتتبعها.",
+    "fullName": "الاسم الكامل *",
+    "fullNamePlaceholder": "اسمك الكامل",
+    "fullNameRequired": "الاسم الكامل مطلوب.",
+    "email": "البريد الإلكتروني *",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "يرجى إدخال بريد إلكتروني صحيح.",
+    "phoneNumber": "رقم الهاتف",
+    "phonePlaceholder": "07xxxxxxxx",
+    "usernameOptional": "اسم المستخدم (اختياري)",
+    "password": "كلمة المرور *",
+    "passwordPlaceholder": "******",
+    "passwordHint": "على الأقل 6 أحرف.",
+    "confirmPassword": "تأكيد كلمة المرور *",
+    "confirmPasswordPlaceholder": "أعد كتابة كلمة المرور",
+    "address": "العنوان",
+    "addressPlaceholder": "المدينة، الدولة",
+    "dateOfBirth": "تاريخ الميلاد",
+    "companyName": "اسم الشركة *",
+    "companyNamePlaceholder": "اسم شركتك",
+    "companyNameRequired": "اسم الشركة مطلوب.",
+    "companyAddress": "عنوان الشركة",
+    "companyAddressPlaceholder": "عنوان الشركة",
+    "vatNumber": "رقم ضريبة القيمة المضافة",
+    "preferredLanguage": "اللغة المفضلة",
+    "langEn": "الإنجليزية",
+    "langAr": "العربية",
+    "createAccount": "إنشاء حساب",
+    "creating": "جارٍ الإنشاء...",
+    "backToLogin": "العودة لتسجيل الدخول"
+  },
+
+  "addEmployee": {
+    "pageTitle": "إضافة موظف دعم جديد",
+    "pageSub": "هذه الصفحة مخصصة لمدير الدعم لإنشاء موظف دعم جديد وربطه تلقائيًا بالمدير.",
+    "backButton": "رجوع",
+    "userInfoSection": "معلومات المستخدم (جدول Users)",
+    "employeeProfileSection": "الملف الوظيفي (جدول EmployeeProfiles)",
+
+    "fullName": "الاسم الكامل *",
+    "fullNamePlaceholder": "مثال: أحمد صالح",
+    "fullNameError": "الاسم الكامل مطلوب (على الأقل 3 أحرف).",
+
+    "email": "البريد الإلكتروني *",
+    "emailPlaceholder": "name@example.com",
+    "emailError": "البريد الإلكتروني غير صحيح.",
+
+    "phoneNumber": "رقم الهاتف",
+    "phonePlaceholder": "07xxxxxxxx",
+
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور *",
+    "passwordPlaceholder": "******",
+    "passwordError": "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+
+    "address": "العنوان",
+    "addressPlaceholder": "عنوان اختياري",
+
+    "dateOfBirth": "تاريخ الميلاد",
+    "imageUrl": "رابط الصورة",
+    "imageUrlPlaceholder": "https://...",
+
+    "employeeCode": "كود الموظف",
+    "employeeCodePlaceholder": "EMP-0001",
+    "hireDate": "تاريخ التعيين",
+    "salary": "الراتب",
+    "jobTitle": "المسمى الوظيفي",
+    "jobTitleManager": "مدير دعم",
+    "jobTitleEmployee": "موظف دعم",
+
+    "createEmployee": "إنشاء موظف",
+    "creating": "جارٍ الإنشاء..."
+  },
+
+  "tickets": {
+    "supportTicketsTitle": "تذاكر الدعم",
+    "supportTicketsSub": "إدارة تذاكر العملاء مع التصفية والتقسيم.",
+
+    "myTicketsTitle": "تذاكري",
+    "myTicketsSub": "تابع طلباتك وشاهد التحديثات بشكل فوري.",
+    "myAssignedTitle": "تذاكري المسندة",
+    "myAssignedSub": "التذاكر المسندة لك حاليًا.",
+
+    "createTicketBtn": "إنشاء تذكرة",
+    "createTicketTitle": "إنشاء تذكرة",
+    "createTicketSub": "أرسل طلب دعم جديد.",
+
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "أدخل عنوان التذكرة...",
+    "descriptionLabel": "الوصف",
+    "descriptionPlaceholder": "صف المشكلة...",
+    "productLabel": "المنتج",
+    "productSelectPlaceholder": "اختر منتجًا...",
+
+    "statusAutoHint": "سيتم ضبط الحالة تلقائيًا إلى",
+    "statusAutoNew": "جديدة",
+
+    "searchClientPlaceholder": "ابحث في تذاكرك...",
+    "searchEmployeePlaceholder": "ابحث بالعنوان...",
+    "searchManagerPlaceholder": "ابحث بالعنوان أو العميل...",
+
+    "loadingTickets": "جارٍ تحميل التذاكر...",
+    "noTicketsYet": "لا توجد لديك تذاكر بعد.",
+    "noAssignedTickets": "لا توجد تذاكر مسندة.",
+    "noTicketsFound": "لا توجد تذاكر.",
+
+    "table": {
+      "colIndex": "#",
+      "colTitle": "العنوان",
+      "colStatus": "الحالة",
+      "colClient": "العميل",
+      "colAssignedTo": "مسندة إلى",
+      "colProduct": "المنتج",
+      "colCreatedAt": "تاريخ الإنشاء",
+      "colAssign": "إسناد"
+    },
+
+    "assign": {
+      "currentAssigneeTitle": "المسؤول الحالي",
+      "assign": "إسناد",
+      "change": "تغيير",
+      "assignTicketTitle": "إسناد التذكرة",
+      "searchEmployeePlaceholder": "ابحث عن موظف...",
+      "noActiveEmployees": "لا يوجد موظفو دعم نشطون.",
+      "assigning": "جارٍ الإسناد...",
+      "confirm": "تأكيد"
+    }
+  },
+
+  "ticketDetails": {
+    "backToTickets": "← العودة للتذاكر",
+    "createdAt": "تاريخ الإنشاء:",
+    "client": "العميل :",
+    "assignedTo": "مسندة إلى :",
+    "product": "المنتج :",
+
+    "ticketActionsTitle": "إجراءات التذكرة",
+    "updating": "جارٍ التحديث...",
+    "markWaitingClient": "وضع بانتظار العميل",
+    "processing": "جارٍ المعالجة...",
+    "confirmFixClose": "تأكيد الإصلاح والإغلاق",
+    "rejectFix": "رفض الإصلاح",
+
+    "attachmentsTitle": "المرفقات",
+    "attachmentsSub": "ارفع ملفات مرتبطة بهذه التذكرة.",
+    "chooseFile": "اختيار ملف",
+    "upload": "رفع",
+    "uploading": "جارٍ الرفع...",
+    "selected": "المحدد:",
+    "maxFileSize": "الحد الأقصى لحجم الملف: {{size}}MB",
+    "loadingAttachments": "جارٍ تحميل المرفقات...",
+    "noAttachmentsYet": "لا توجد مرفقات بعد.",
+    "open": "فتح",
+    "delete": "حذف",
+    "deleting": "جارٍ الحذف...",
+    "deleteTooltip": "حذف مرفقك",
+
+    "commentsTitle": "التعليقات",
+    "noComments": "لا توجد تعليقات لهذه التذكرة بعد.",
+    "addCommentTitle": "إضافة تعليق",
+    "commentPlaceholder": "اكتب تعليقك...",
+    "sendComment": "إرسال التعليق",
+    "sending": "جارٍ الإرسال...",
+    "loadingTicketDetails": "جارٍ تحميل تفاصيل التذكرة..."
+  },
+
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "نظرة سريعة للمدير مع إحصاءات مجمعة.",
+    "refresh": "تحديث",
+    "loading": "جارٍ تحميل لوحة التحكم...",
+    "totalTickets": "إجمالي التذاكر",
+    "statusDistribution": "توزيع الحالات",
+    "trendTitle": "اتجاه التذاكر (آخر 30 يومًا)",
+    "trendHint": "يتم ضبط ارتفاع الأعمدة تلقائيًا حسب أعلى قيمة يومية.",
+    "topEmployees": "أفضل موظفي الدعم",
+    "assigned": "مسندة",
+    "resolved": "تم الحل",
+    "closed": "مغلقة",
+    "ticketsByProduct": "التذاكر حسب المنتج"
+  },
+
+  "users": {
+    "overviewTitle": "نظرة على المستخدمين",
+    "overviewSub": "الموظفون والعملاء مع عدد التذاكر.",
+
+    "searchPlaceholder": "ابحث بالاسم أو المعرف...",
+
+    "allTypes": "كل الأنواع",
+    "managers": "المدراء",
+    "employees": "الموظفون",
+    "clients": "العملاء",
+
+    "allStatus": "كل الحالات",
+    "active": "نشط",
+    "inactive": "غير نشط",
+
+    "loadingUsers": "جارٍ تحميل المستخدمين...",
+    "noUsersFound": "لا يوجد مستخدمون.",
+
+    "ticketsLabel": "التذاكر",
+
+    "editUser": "تعديل المستخدم",
+    "loadingUserData": "جارٍ تحميل بيانات المستخدم...",
+    "saveChanges": "حفظ التعديلات",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+
+    "deactivate": "تعطيل",
+    "activate": "تفعيل"
+  }
+}

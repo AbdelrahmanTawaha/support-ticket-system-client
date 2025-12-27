@@ -1,0 +1,317 @@
+{
+  
+  
+  
+
+  "common": {
+    "LANG": "English",
+    "back": "Back",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "clear": "Clear",
+    "refresh": "Refresh",
+    "search": "Search",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "optional": "Optional",
+    "edit": "edit",
+    "saving":"save edit",
+     "save":"save "
+  },
+
+  "status": {
+    "new": "New",
+    "inProgress": "In Progress",
+    "waitingClient": "Waiting Client",
+    "resolved": "Resolved",
+    "closed": "Closed",
+    "unassigned": "Unassigned"
+  },
+
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "ticketsCount": "{{count}} tickets"
+  },
+
+  "header": {
+    "brandTitle": "Support Ticket System",
+    "brandSubtitle": "Manage • Track • Resolve",
+    "home": "Home",
+    "tickets": "Tickets",
+    "users": "Users",
+    "dashboard": "Dashboard",
+    "myAssigned": "My Assigned",
+    "myTickets": "My Tickets",
+    "addEmployee": "+ Add Employee",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout",
+    "userFallback": "User"
+  },
+
+  "footer": {
+    "copyright": "© {{year}} Support Ticket System",
+    "tagline": "Built for Smart Support Teams"
+  },
+
+  "home": {
+    "badge": "Always Ready • Always Reliable",
+    "titleLine1": "Support That Moves",
+    "titleLine2": "With You",
+    "lead": "We’re here to make everything smoother, faster, and clearer. No noise, no delays — just a polished experience built around your time and your peace of mind. When you need help, guidance, or a quick resolution, you’ll find a team that truly shows up.",
+    "startNow": "Start Now",
+    "continue": "Continue with Confidence",
+    "explore": "Explore the experience",
+    "welcome": "Welcome, {{userName}}",
+    "role": "{{role}}",
+    "kpi1Title": "Human-First Service",
+    "kpi1Sub": "Respectful • Clear • Consistent",
+    "kpi2Title": "Speed Without Stress",
+    "kpi2Sub": "Quick answers, smooth outcomes",
+    "kpi3Title": "Confidence by Design",
+    "kpi3Sub": "A modern experience you can trust",
+    "missionNote": "Our mission is simple: remove friction, protect your time, and deliver support that feels effortless every day."
+  },
+
+  "auth": {
+    "loginTitle": "Login",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPasswordLink": "Forgot Password?",
+    "forgotPasswordTitle": "Forgot Password",
+    "forgotPasswordSub": "Enter your username or email. We will send you a reset code.",
+    "usernameOrEmail": "Username or Email",
+    "usernameOrEmailPlaceholder": "username or email",
+    "sendCode": "Send Code",
+    "sending": "Sending...",
+    "backToLogin": "Back to Login",
+    "resetPasswordTitle": "Reset Password",
+    "resetPasswordSub": "Enter the code sent to your email, then set your new password.",
+    "resetCode": "Reset Code",
+    "resetCodePlaceholder": "6-digit code",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "changePassword": "Change Password",
+    "saving": "Saving...",
+    "resendCode": "Resend code"
+  },
+
+  "register": {
+    "title": "Create Client Account",
+    "subtitle": "Register as a client to create and track your support tickets.",
+    "fullName": "Full Name *",
+    "fullNamePlaceholder": "Your full name",
+    "fullNameRequired": "Full name is required.",
+    "email": "Email *",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "Valid email is required.",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "07xxxxxxxx",
+    "usernameOptional": "Username (optional)",
+    "password": "Password *",
+    "passwordPlaceholder": "******",
+    "passwordHint": "At least 6 characters.",
+    "confirmPassword": "Confirm Password *",
+    "confirmPasswordPlaceholder": "Repeat password",
+    "address": "Address",
+    "addressPlaceholder": "City, Country",
+    "dateOfBirth": "Date of Birth",
+    "companyName": "Company Name *",
+    "companyNamePlaceholder": "Your company",
+    "companyNameRequired": "Company name is required.",
+    "companyAddress": "Company Address",
+    "companyAddressPlaceholder": "Company address",
+    "vatNumber": "VAT Number",
+    "preferredLanguage": "Preferred Language",
+    "langEn": "English",
+    "langAr": "Arabic",
+    "createAccount": "Create Account",
+    "creating": "Creating...",
+    "backToLogin": "Back to Login"
+  },
+
+  "addEmployee": {
+    "pageTitle": "Add New Support Employee",
+    "pageSub": "This page is for the Support Manager to create a new support employee and automatically link them to the manager.",
+    "backButton": "Back",
+    "userInfoSection": "User Information (Users Table)",
+    "employeeProfileSection": "Employee Profile (EmployeeProfiles Table)",
+
+    "fullName": "Full Name *",
+    "fullNamePlaceholder": "e.g., Ahmad Saleh",
+    "fullNameError": "Full name is required (at least 3 characters).",
+
+    "email": "Email *",
+    "emailPlaceholder": "name@example.com",
+    "emailError": "Invalid email address.",
+
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "07xxxxxxxx",
+
+    "username": "Username",
+    "password": "Password *",
+    "passwordPlaceholder": "******",
+    "passwordError": "Password must be at least 6 characters.",
+
+    "address": "Address",
+    "addressPlaceholder": "Optional address",
+
+    "dateOfBirth": "Date of Birth",
+    "imageUrl": "Image Url",
+    "imageUrlPlaceholder": "https://...",
+
+    "employeeCode": "Employee Code",
+    "employeeCodePlaceholder": "EMP-0001",
+    "hireDate": "Hire Date",
+    "salary": "Salary",
+    "jobTitle": "Job Title",
+    "jobTitleManager": "Support Manager",
+    "jobTitleEmployee": "Support Employee",
+
+    "createEmployee": "Create Employee",
+    "creating": "Creating..."
+  },
+
+  "tickets": {
+    "supportTicketsTitle": "Support Tickets",
+    "supportTicketsSub": "Manage client support tickets with filtering & pagination.",
+
+    "myTicketsTitle": "My Tickets",
+    "myTicketsSub": "Track your requests and follow updates in real time.",
+    "myAssignedTitle": "My Assigned Tickets",
+    "myAssignedSub": "Tickets currently assigned to you.",
+
+    "createTicketBtn": "Create Ticket",
+    "createTicketTitle": "Create Ticket",
+    "createTicketSub": "Submit a new support request.",
+
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter ticket title...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Describe your issue...",
+    "productLabel": "Product",
+    "productSelectPlaceholder": "Select product...",
+
+    "statusAutoHint": "Status will be automatically set to",
+    "statusAutoNew": "New",
+
+    "searchClientPlaceholder": "Search your tickets...",
+    "searchEmployeePlaceholder": "Search by title...",
+    "searchManagerPlaceholder": "Search by title or client...",
+
+    "loadingTickets": "Loading tickets...",
+    "noTicketsYet": "You have no tickets yet.",
+    "noAssignedTickets": "No assigned tickets.",
+    "noTicketsFound": "No tickets found.",
+
+    "table": {
+      "colIndex": "#",
+      "colTitle": "Title",
+      "colStatus": "Status",
+      "colClient": "Client",
+      "colAssignedTo": "Assigned To",
+      "colProduct": "Product",
+      "colCreatedAt": "Created At",
+      "colAssign": "Assign"
+    },
+
+    "assign": {
+      "currentAssigneeTitle": "Current Assignee",
+      "assign": "Assign",
+      "change": "Change",
+      "assignTicketTitle": "Assign Ticket",
+      "searchEmployeePlaceholder": "Search employee...",
+      "noActiveEmployees": "No active support employees found.",
+      "assigning": "Assigning...",
+      "confirm": "Confirm"
+    }
+  },
+
+  "ticketDetails": {
+    "backToTickets": "← Back to tickets",
+    "createdAt": "Created at:",
+    "client": "Client :",
+    "assignedTo": "Assigned To :",
+    "product": "Product :",
+
+    "ticketActionsTitle": "Ticket Actions",
+    "updating": "Updating...",
+    "markWaitingClient": "Mark as Waiting Client",
+    "processing": "Processing...",
+    "confirmFixClose": "Confirm Fix & Close",
+    "rejectFix": "Reject Fix",
+
+    "attachmentsTitle": "Attachments",
+    "attachmentsSub": "Upload files related to this ticket.",
+    "chooseFile": "Choose File",
+    "upload": "Upload",
+    "uploading": "Uploading...",
+    "selected": "Selected:",
+    "maxFileSize": "Max file size: {{size}}MB",
+    "loadingAttachments": "Loading attachments...",
+    "noAttachmentsYet": "No attachments yet.",
+    "open": "Open",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "deleteTooltip": "Delete your attachment",
+
+    "commentsTitle": "Comments",
+    "noComments": "No comments for this ticket yet.",
+    "addCommentTitle": "Add Comment",
+    "commentPlaceholder": "Write your comment...",
+    "sendComment": "Send Comment",
+    "sending": "Sending...",
+    "loadingTicketDetails": "Loading ticket details..."
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Manager overview with fast aggregated insights.",
+    "refresh": "Refresh",
+    "loading": "Loading dashboard...",
+    "totalTickets": "Total Tickets",
+    "statusDistribution": "Status Distribution",
+    "trendTitle": "Tickets Trend (Last 30 days)",
+    "trendHint": "Bars scale automatically based on max day count.",
+    "topEmployees": "Top Support Employees",
+    "assigned": "Assigned",
+    "resolved": "Resolved",
+    "closed": "Closed",
+    "ticketsByProduct": "Tickets by Product"
+  },
+
+  "users": {
+    "overviewTitle": "Users Overview",
+    "overviewSub": "Employees & Clients with ticket counts.",
+
+    "searchPlaceholder": "Search by name or id...",
+
+    "allTypes": "All Types",
+    "managers": "Managers",
+    "employees": "Employees",
+    "clients": "Clients",
+
+    "allStatus": "All Status",
+    "active": "Active",
+    "inactive": "Inactive",
+
+    "loadingUsers": "Loading users...",
+    "noUsersFound": "No users found.",
+
+    "ticketsLabel": "Tickets",
+
+    "editUser": "Edit User",
+    "loadingUserData": "Loading user data...",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+
+    "deactivate": "Deactivate",
+    "activate": "Activate"
+  }
+}
+    

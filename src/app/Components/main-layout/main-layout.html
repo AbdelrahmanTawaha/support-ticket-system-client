@@ -1,0 +1,61 @@
+<!-- src/app/components/main-layout/main-layout.component.html -->
+
+<div class="app-shell">
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-wrap">
+        <img src="assets/Logo.png" alt="Logo" class="logo" />
+        <div class="brand-text">
+          <h1>{{ 'header.brandTitle' | translate }}</h1>
+          <span>{{ 'header.brandSubtitle' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <nav class="nav-links">
+        <a routerLink="/tickets" routerLinkActive="active">
+          {{ 'header.tickets' | translate }}
+        </a>
+
+        <a
+          *ngIf="isManager() || isEmployee()"
+          routerLink="/my-tickets"
+          routerLinkActive="active"
+        >
+          {{ 'header.myAssigned' | translate }}
+        </a>
+
+        <a
+          *ngIf="isClient()"
+          routerLink="/my-tickets"
+          routerLinkActive="active"
+        >
+          {{ 'header.myTickets' | translate }}
+        </a>
+      </nav>
+
+      <div class="user-area" *ngIf="userName">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">{{ role }}</span>
+
+        <button class="btn-logout" (click)="logout()">
+          {{ 'header.logout' | translate }}
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <span>{{ 'footer.copyright' | translate:{ year: year } }}</span>
+    <span class="footer-separator">•</span>
+    <span>{{ 'footer.tagline' | translate }}</span>
+  </footer>
+</div>

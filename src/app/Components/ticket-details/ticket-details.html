@@ -1,0 +1,390 @@
+<!-- src/app/Components/ticket-details/ticket-details.html -->
+
+<div class="container my-4" *ngIf="!loading && ticket; else loadingOrError">
+
+  <!-- Back -->
+  <button class="btn btn-back mb-3" (click)="goBack()">
+    {{ 'ticketDetails.backToTickets' | translate }}
+  </button>
+
+  <!-- Card -->
+  <div class="card ticket-card">
+
+    <!-- Header -->
+    <div class="card-header ticket-header d-flex justify-content-between align-items-center">
+      <div>
+        <ng-container *ngIf="!editingDetails; else editTitleTpl">
+  <h4 class="mb-0">{{ ticket.title }}</h4>
+</ng-container>
+
+<ng-template #editTitleTpl>
+  <input class="edit-input" type="text" [(ngModel)]="editTitle" />
+</ng-template>
+
+        <small class="text-muted">
+          Ticket #{{ ticket.id }} ·
+          {{ 'ticketDetails.createdAt' | translate }}
+          {{ ticket.createdAt | date:'short' }}
+        </small>
+      </div>
+    </div>
+<div class="d-flex align-items-center gap-2" >
+  <button class="btn-edit" type="button" (click)="startEdit()" *ngIf="!editingDetails">
+    <span class="edit-ico">✎</span>
+  </button>
+
+  <button class="btn btn-sm save-btn" type="button"
+          (click)="saveDetails()"
+          [disabled]="detailsSaving"
+          *ngIf="editingDetails">
+    {{ detailsSaving ? ('common.saving' | translate) : ('common.save' | translate) }}
+  </button>
+
+  <button class="btn btn-sm cancel-btn" type="button" (click)="cancelEdit()" *ngIf="editingDetails">
+    {{ 'common.cancel' | translate }}
+  </button>
+</div>
+
+    <!-- Body -->
+    <div class="card-body">
+
+    <ng-container *ngIf="!editingDetails; else editDescTpl">
+  <p class="mb-4 ticket-desc-text">{{ ticket.description }}</p>
+</ng-container>
+
+<ng-template #editDescTpl>
+  <textarea class="edit-textarea" rows="4" [(ngModel)]="editDescription"></textarea>
+</ng-template>
+
+      <!-- Meta info -->
+      <div class="row mb-4 ticket-meta">
+        <div class="col-md-4">
+          <h6 class="text-muted mb-1">
+            {{ 'ticketDetails.client' | translate }}
+            {{ ticket.clientName }}
+          </h6>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-muted mb-1">
+            {{ 'ticketDetails.assignedTo' | translate }}
+            {{ ticket.assignedEmployeeName || ('status.unassigned' | translate) }}
+          </h6>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-muted mb-1">
+            {{ 'ticketDetails.product' | translate }}
+            {{ ticket.productName }}
+          </h6>
+        </div>
+      </div>
+
+      <hr class="soft-divider">
+
+      <!-- =========================
+           Status Actions
+           ========================= -->
+      <div class="status-actions" *ngIf="ticket">
+
+        <div class="status-actions-head">
+          <h5 class="section-title mb-0">
+            {{ 'ticketDetails.ticketActionsTitle' | translate }}
+          </h5>
+          <span class="sub"></span>
+        </div>
+
+        <div class="status-actions-buttons">
+
+          <!--  Employee/Manager -->
+          <ng-container *appHasRole="['SupportEmployee','SupportManager']">
+            <button
+              class="action-btn action-wait"
+              type="button"
+              *ngIf="canMarkWaitingClient()"
+              (click)="markWaitingClient()"
+              [disabled]="actionLoading"
+            >
+              {{
+                actionLoading
+                  ? ('ticketDetails.updating' | translate)
+                  : ('ticketDetails.markWaitingClient' | translate)
+              }}
+            </button>
+          </ng-container>
+
+
+          <!--  Client -->
+          <ng-container *appHasRole="'ExternalClient'">
+            <button
+              class="action-btn action-confirm"
+              type="button"
+              *ngIf="canConfirmFix()"
+           (click)="clientDecision('confirm')"
+              [disabled]="actionLoading"
+            >
+              {{
+                actionLoading
+                  ? ('ticketDetails.processing' | translate)
+                  : ('ticketDetails.confirmFixClose' | translate)
+              }}
+            </button>
+
+            <button
+              class="action-btn action-reject"
+              type="button"
+              *ngIf="canRejectFix()"
+            (click)="clientDecision('reject')"
+              [disabled]="actionLoading"
+            >
+              {{
+                actionLoading
+                  ? ('ticketDetails.processing' | translate)
+                  : ('ticketDetails.rejectFix' | translate)
+              }}
+            </button>
+          </ng-container>
+
+        </div>
+
+        <div class="action-msg success" *ngIf="actionSuccess">
+          {{ actionSuccess }}
+        </div>
+
+        <div class="action-msg error" *ngIf="actionError">
+          {{ actionError }}
+        </div>
+
+      </div>
+
+      <hr class="soft-divider">
+
+      <!-- =========================
+           Attachments Section (Pro)
+           ========================= -->
+      <div class="attachments-card">
+
+        <!-- Head -->
+        <div class="attachments-head">
+          <div class="title-group">
+            <h5 class="section-title mb-0">
+              {{ 'ticketDetails.attachmentsTitle' | translate }}
+            </h5>
+            <span class="sub">
+              {{ 'ticketDetails.attachmentsSub' | translate }}
+            </span>
+          </div>
+
+          <div class="attach-actions">
+            <label class="file-pick">
+              <input type="file" (change)="onFileSelected($event)" />
+              {{ 'ticketDetails.chooseFile' | translate }}
+            </label>
+
+            <button
+              class="file-upload-btn"
+              type="button"
+              (click)="uploadAttachment()"
+              [disabled]="uploadingAttachment || !selectedFile"
+            >
+              {{
+                uploadingAttachment
+                  ? ('ticketDetails.uploading' | translate)
+                  : ('ticketDetails.upload' | translate)
+              }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Sub line -->
+        <div class="attachments-sub">
+          <span *ngIf="selectedFile">
+            {{ 'ticketDetails.selected' | translate }}
+            <strong>{{ selectedFile.name }}</strong>
+            <em>({{ formatSize(selectedFile.size) }})</em>
+          </span>
+
+          <span class="hint" *ngIf="!selectedFile">
+            {{ 'ticketDetails.maxFileSize' | translate:{ size: maxFileSizeMB } }}
+          </span>
+        </div>
+
+        <!-- Upload msgs -->
+        <div class="attach-msg success" *ngIf="uploadSuccess">
+          {{ uploadSuccess }}
+        </div>
+        <div class="attach-msg error" *ngIf="uploadError">
+          {{ uploadError }}
+        </div>
+
+        <!-- Delete msgs -->
+        <div class="attach-msg success" *ngIf="deleteSuccess">
+          {{ deleteSuccess }}
+        </div>
+        <div class="attach-msg error" *ngIf="deleteError">
+          {{ deleteError }}
+        </div>
+
+        <!-- Loading -->
+        <div class="attach-loading" *ngIf="attachmentsLoading">
+          {{ 'ticketDetails.loadingAttachments' | translate }}
+        </div>
+
+        <!-- Error -->
+        <div class="attach-error" *ngIf="!attachmentsLoading && attachmentsError">
+          {{ attachmentsError }}
+        </div>
+
+        <!-- Empty -->
+        <div
+          class="attach-empty"
+          *ngIf="!attachmentsLoading && !attachmentsError && attachments.length === 0"
+        >
+          {{ 'ticketDetails.noAttachmentsYet' | translate }}
+        </div>
+
+        <!-- Grid -->
+        <div
+          class="attachments-grid"
+          *ngIf="!attachmentsLoading && !attachmentsError && attachments.length"
+        >
+
+          <div class="attach-item" *ngFor="let a of attachments">
+            <div class="attach-icon">📎</div>
+
+            <div class="attach-info">
+              <div class="attach-name" title="{{ a.fileName }}">
+                {{ a.fileName }}
+              </div>
+
+              <div class="attach-meta">
+                <span>{{ formatSize(a.fileSizeInBytes) }}</span>
+                <span class="dot">•</span>
+                <span>{{ a.uploadedAt | date:'short' }}</span>
+
+                <span class="dot" *ngIf="a.uploadedByName || a.uploadedByUserId">•</span>
+                <span class="by uploader" *ngIf="a.uploadedByName || a.uploadedByUserId">
+                  {{ a.uploadedByName || ('User #' + a.uploadedByUserId) }}
+                </span>
+              </div>
+            </div>
+
+            <div class="attach-open">
+
+              <a
+                class="attach-link"
+                [href]="getAttachmentUrl(a)"
+                target="_blank"
+                rel="noopener"
+              >
+                {{ 'ticketDetails.open' | translate }}
+              </a>
+
+              <!--  Delete owner only -->
+              <button
+                class="attach-del"
+                type="button"
+                *ngIf="canDeleteAttachment(a)"
+                (click)="deleteAttachment(a)"
+                [disabled]="deleting[a.id]"
+                [title]="'ticketDetails.deleteTooltip' | translate"
+              >
+                <span class="mini-spinner" *ngIf="deleting[a.id]"></span>
+                {{
+                  deleting[a.id]
+                    ? ('ticketDetails.deleting' | translate)
+                    : ('ticketDetails.delete' | translate)
+                }}
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <hr class="soft-divider">
+
+      <!-- =========================
+           Comments
+           ========================= -->
+      <h5 class="section-title mb-3">
+        {{ 'ticketDetails.commentsTitle' | translate }}
+      </h5>
+
+      <!-- Comments List -->
+      <div class="comments-wrap" *ngIf="ticket.comments?.length; else noComments">
+
+        <div
+          *ngFor="let c of ticket.comments"
+          class="comment-row"
+          [ngClass]="{ 'from-client': c.isFromClient, 'from-staff': !c.isFromClient }"
+        >
+          <div class="comment-bubble">
+            <div class="comment-meta">
+              <span class="comment-author">{{ c.authorName }}</span>
+              <span class="comment-time">{{ c.createdAt | date:'short' }}</span>
+            </div>
+
+            <div class="comment-text">
+              {{ c.commentText }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <ng-template #noComments>
+        <p class="text-muted">
+          {{ 'ticketDetails.noComments' | translate }}
+        </p>
+      </ng-template>
+
+      <!-- Add Comment -->
+      <div class="add-comment-card mt-4">
+        <div class="add-comment-header">
+          <span>{{ 'ticketDetails.addCommentTitle' | translate }}</span>
+        </div>
+
+        <textarea
+          class="add-comment-input"
+          rows="3"
+          [(ngModel)]="commentText"
+          [placeholder]="'ticketDetails.commentPlaceholder' | translate"
+        ></textarea>
+
+        <div class="add-comment-footer">
+          <span class="add-comment-error" *ngIf="commentError">
+            {{ commentError }}
+          </span>
+
+          <button
+            class="add-comment-btn"
+            (click)="addComment()"
+            [disabled]="addingComment"
+          >
+            {{
+              addingComment
+                ? ('ticketDetails.sending' | translate)
+                : ('ticketDetails.sendComment' | translate)
+            }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Loading / Error -->
+<ng-template #loadingOrError>
+  <div class="container my-4">
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status"></div>
+      <p class="mt-2">
+        {{ 'ticketDetails.loadingTicketDetails' | translate }}
+      </p>
+    </div>
+    <div *ngIf="!loading && errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+</ng-template>

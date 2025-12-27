@@ -1,0 +1,136 @@
+<header class="app-header">
+  <div class="header-left">
+    <div class="logo-wrap">
+      <img
+        src="assets/Logo.png"
+        alt="Logo"
+        class="logo"
+        title = "logo"
+      />
+
+      <div class="brand-text">
+        <h1>{{ 'header.brandTitle' | translate }}</h1>
+        <span>{{ 'header.brandSubtitle' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-right" *ngIf="state$ | async as s">
+
+    <nav class="nav-links">
+
+      <!-- Language Toggle -->
+      <button
+        class="btn-ghost lang-btn"
+        type="button"
+        (click)="toggleLang()"
+        [title]="'common.LANG' | translate"
+      >
+        {{ 'common.LANG' | translate }}
+      </button>
+
+      <!-- Home -->
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ 'header.home' | translate }}
+      </a>
+
+      <!-- =========================
+           Manager Links
+           ========================= -->
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'SupportManager'"
+        routerLink="/tickets"
+        routerLinkActive="active"
+      >
+        {{ 'header.tickets' | translate }}
+      </a>
+
+
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'SupportManager'"
+        routerLink="/admin/users-counts"
+        routerLinkActive="active"
+      >
+        {{ 'header.users' | translate }}
+      </a>
+
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'SupportManager'"
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+      >
+        {{ 'header.dashboard' | translate }}
+      </a>
+
+      <!-- Employee -->
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'SupportEmployee'"
+        routerLink="/employee"
+        routerLinkActive="active"
+      >
+        {{ 'header.myAssigned' | translate }}
+      </a>
+
+      <!-- Client -->
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'ExternalClient'"
+        routerLink="/client"
+        routerLinkActive="active"
+      >
+        {{ 'header.myTickets' | translate }}
+      </a>
+
+      <!--  Button for Manager -->
+      <a
+        *ngIf="s.isLoggedIn && s.role === 'SupportManager'"
+        class="btn-add-employee"
+        routerLink="/admin/add-employee"
+        routerLinkActive="active-add"
+      >
+        {{ 'header.addEmployee' | translate }}
+      </a>
+
+      <!--  Register button for guest -->
+      <a
+        *ngIf="!s.isLoggedIn"
+        class="btn-register"
+        routerLink="/register-client"
+        routerLinkActive="active-register"
+      >
+        {{ 'header.register' | translate }}
+      </a>
+
+    </nav>
+
+    <!-- =========================
+         Right user area
+         ========================= -->
+
+    <!-- Logged in -->
+    <div class="user-area" *ngIf="s.isLoggedIn; else guestArea">
+      <span class="user-name">
+        {{ s.userName ?? ('header.userFallback' | translate) }}
+      </span>
+
+      <span class="user-role" *ngIf="s.role">
+        {{ s.role }}
+      </span>
+
+      <button class="btn-logout" (click)="logout()">
+        {{ 'header.logout' | translate }}
+      </button>
+    </div>
+
+    <!-- Guest -->
+    <ng-template #guestArea>
+      <button class="btn-login" (click)="goLogin()">
+        {{ 'header.login' | translate }}
+      </button>
+    </ng-template>
+
+  </div>
+</header>

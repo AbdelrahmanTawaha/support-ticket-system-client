@@ -1,0 +1,299 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  background: #f8f9fa;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* Reset داخل الصفحة */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Layout */
+.login-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+/* Overlay shape desktop */
+.overlay {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  :host {
+    background: #ffffff;
+  }
+
+  .overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: #f8f9fa;
+    z-index: 0;
+    clip-path: polygon(10% 0%, 70% 0%, 90% 100%, 30% 100%);
+  }
+
+  .login-container {
+    z-index: 1;
+  }
+}
+
+/* Bear */
+.cartoon-container {
+  width: clamp(240px, 30vw, 360px);
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.cartoon-container svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Form */
+.form.login {
+  width: min(480px, 92vw);
+  max-width: 30em;
+  z-index: 1;
+}
+
+.form__field {
+  margin: 0.875rem 0;
+}
+
+/* الحقلين الرئيسيين (إيميل + باسورد) */
+.form__field--email,
+.form__field--password {
+  display: flex;
+  align-items: stretch;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+}
+
+/* عمود الأيقونة */
+.login .label.label--icon {
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 4rem; /* عرض ثابت، ما بتصير كتلة ضخمة */
+  padding: 0;
+}
+
+/* حجم الأيقونة نفسه */
+.login .label .icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: block;
+  fill: #111827;
+}
+
+/* Padding للحقل والـ submit فقط */
+.login input[type='text'],
+.login input[type='password'],
+.login input[type='submit'] {
+  padding: 1rem;
+}
+
+/* Inputs */
+.form__input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #2c3338;
+  border-bottom: 2px solid #ddf1fa;
+  font-size: 0.95rem;
+}
+
+.form__input::placeholder {
+  color: #8a949b;
+}
+
+/* underline animation */
+.underline-wrapper {
+  position: relative;
+  height: 2px;
+}
+
+.underline {
+  background-color: #9fd8f1;
+  display: inline-block;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s linear;
+  width: 100%;
+}
+
+.login input[type='password']:focus + .underline-wrapper > .underline,
+.login input[type='text']:focus + .underline-wrapper > .underline {
+  transform: scaleX(1);
+}
+
+/* Actions area */
+.login-actions-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Remember me custom checkbox */
+.form__field--remember-me {
+  order: 1;
+}
+
+.label--remember-me {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.5rem;
+}
+
+.label--remember-me input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  height: 1.2em;
+  width: 1.2em;
+  border-radius: 0.25rem;
+  border: 2px solid #2c3338;
+  display: inline-block;
+  position: relative;
+  background: #ffffff;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.label--remember-me input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.label--remember-me .checkmark:after {
+  left: 0.32em;
+  top: 0.05em;
+  width: 0.28em;
+  height: 0.6em;
+  border: solid #2c3338;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.remember-me-text {
+  margin-inline-start: 0.25rem;
+  color: #2c3338;
+}
+
+/* Forgot link */
+.forgot-link {
+  order: 2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Error message */
+.error-message {
+  width: 100%;
+  color: #b00020;
+  font-weight: 600;
+  order: 3;
+}
+
+/* Submit */
+.form__field--submit {
+  width: 100%;
+  order: 4;
+}
+
+.login input[type='submit'] {
+  width: 100%;
+  border: 0;
+  border-radius: 0.75rem;
+  background-color: #ddf1fa;
+  color: #2c3338;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.08s ease;
+}
+
+.login input[type='submit']:hover {
+  background-color: #9fd8f1;
+  color: #1b2024;
+}
+
+.login input[type='submit']:active {
+  transform: translateY(1px);
+}
+
+.login input[type='submit'][disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Desktop tweaks */
+@media (min-width: 960px) {
+  .form__field--submit {
+    width: 50%;
+  }
+
+  .forgot-link {
+    width: 100%;
+    text-align: right;
+  }
+}
+.mySVG .tooth {
+  display: none !important;
+}

@@ -1,0 +1,120 @@
+<div class="role-page client-page">
+
+  <div class="page-head">
+    <div>
+      <h2>{{ 'tickets.myTicketsTitle' | translate }}</h2>
+      <p class="sub">{{ 'tickets.myTicketsSub' | translate }}</p>
+    </div>
+
+    <button class="ghost-btn" (click)="onSearchChange()">
+      {{ 'common.refresh' | translate }}
+    </button>
+  </div>
+
+  <button class="primary-btn" (click)="openCreate()">
+    {{ 'tickets.createTicketBtn' | translate }}
+  </button>
+
+  <div class="toolbar">
+    <input
+      class="search-input"
+      type="text"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+      [placeholder]="'tickets.searchClientPlaceholder' | translate"
+    />
+
+    <select
+      class="status-select"
+      [(ngModel)]="statusFilter"
+      (change)="onStatusChange()"
+    >
+      <option *ngFor="let s of ticketStatuses" [ngValue]="s.value">
+        {{ s.label }}
+      </option>
+    </select>
+  </div>
+
+  <div
+    class="info-row"
+    *ngIf="{
+      loading: (loading$ | async),
+      error: (errorMessage$ | async),
+      tickets: (tickets$ | async)
+    } as vm"
+  >
+    <div *ngIf="vm.loading" class="info loading">
+      {{ 'tickets.loadingTickets' | translate }}
+    </div>
+
+    <div *ngIf="!vm.loading && vm.error" class="info error">
+      {{ vm.error }}
+    </div>
+
+    <div
+      *ngIf="!vm.loading && !vm.error && (!vm.tickets || vm.tickets.length === 0)"
+      class="info empty"
+    >
+      {{ 'tickets.noTicketsYet' | translate }}
+    </div>
+  </div>
+
+  <div class="cards-grid" *ngIf="(tickets$ | async) as tickets">
+    <div
+      class="ticket-card"
+      *ngFor="let t of tickets"
+      (click)="openDetails(t.id)"
+    >
+      <div class="card-top">
+        <span class="ticket-id">#{{ t.id }}</span>
+        <span class="status-chip" [ngClass]="getStatusClass(t.status)">
+          {{ getStatusLabel(t.status) }}
+        </span>
+      </div>
+
+      <div class="title">{{ t.title }}</div>
+
+      <div class="desc" *ngIf="t.description">
+        {{ t.description }}
+      </div>
+
+      <div class="meta">
+        <span class="meta-item">
+          {{ 'ticketDetails.assignedTo' | translate }}
+          <b>{{ t.assignedEmployeeName || ('status.unassigned' | translate) }}</b>
+        </span>
+        <span class="meta-item">
+          {{ 'ticketDetails.product' | translate }}
+          <b>{{ t.productName || '-' }}</b>
+        </span>
+      </div>
+
+      <div class="time">
+        {{ 'ticketDetails.createdAt' | translate }}
+        {{ t.createdAt | date:'short' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="(totalCount$ | async) as totalCount">
+    <button (click)="prevPage()" [disabled]="pageNumber === 1">
+      &laquo; {{ 'pagination.prev' | translate }}
+    </button>
+
+    <span class="page-info">
+      {{ 'pagination.page' | translate }} {{ pageNumber }}
+      {{ 'pagination.of' | translate }}
+      {{ totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1 }}
+      <span class="dot">•</span>
+      {{ 'pagination.ticketsCount' | translate:{ count: totalCount } }}
+    </span>
+
+    <button
+      (click)="nextPage(totalCount)"
+      [disabled]="pageNumber >= (totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1)"
+    >
+      {{ 'pagination.next' | translate }} &raquo;
+    </button>
+  </div>
+
+</div>

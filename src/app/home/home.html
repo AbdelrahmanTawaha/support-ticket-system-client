@@ -1,0 +1,91 @@
+<section class="home-hero">
+
+  <!-- Luxury background layers -->
+  <div class="hero-bg">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    <span class="grid-glow"></span>
+    <span class="vignette"></span>
+  </div>
+
+  <div class="hero-grid">
+
+    <div class="hero-left">
+      <div class="badge">
+        <span class="dot"></span>
+        {{ 'home.badge' | translate }}
+      </div>
+
+      <h1>
+        {{ 'home.titleLine1' | translate }}
+        <span class="glow">{{ 'home.titleLine2' | translate }}</span>
+      </h1>
+
+      <p class="lead">
+        {{ 'home.lead' | translate }}
+      </p>
+
+      <div class="hero-actions">
+        <button
+          class="btn-primary"
+          *ngIf="!isLoggedIn"
+          (click)="goLogin()">
+          {{ 'home.startNow' | translate }}
+        </button>
+
+        <button
+          class="btn-primary"
+          *ngIf="isLoggedIn"
+          (click)="goDashboard()">
+          {{ 'home.continue' | translate }}
+        </button>
+
+        <a class="btn-ghost" routerLink="/login" *ngIf="!isLoggedIn">
+          {{ 'home.explore' | translate }}
+        </a>
+      </div>
+
+      <div class="hero-user" *ngIf="isLoggedIn">
+        <div class="user-chip">
+          <div class="avatar">{{ userName.charAt(0) }}</div>
+          <div class="u-text">
+            <div class="u-name">
+              {{ 'home.welcome' | translate:{ userName: userName } }}
+            </div>
+            <div class="u-role">
+              {{ 'home.role' | translate:{ role: role } }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="glass-card">
+        <div class="kpi">
+          <span class="kpi-title">{{ 'home.kpi1Title' | translate }}</span>
+          <span class="kpi-sub">{{ 'home.kpi1Sub' | translate }}</span>
+        </div>
+
+        <div class="kpi">
+          <span class="kpi-title">{{ 'home.kpi2Title' | translate }}</span>
+          <span class="kpi-sub">{{ 'home.kpi2Sub' | translate }}</span>
+        </div>
+
+        <div class="kpi">
+          <span class="kpi-title">{{ 'home.kpi3Title' | translate }}</span>
+          <span class="kpi-sub">{{ 'home.kpi3Sub' | translate }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="mini-note">
+          {{ 'home.missionNote' | translate }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

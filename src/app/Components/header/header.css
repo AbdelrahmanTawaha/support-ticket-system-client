@@ -1,0 +1,401 @@
+/* =========================================
+   HEADER - Unified Premium Dark Pills
+   ========================================= */
+
+/* Header shell */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.75rem 1.75rem;
+
+  background:
+    linear-gradient(90deg, #0b1222, #0f172a 40%, #0b1222 100%);
+  border-bottom: 1px solid rgba(148,163,184,0.08);
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.04) inset;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Groups */
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Logo block */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.85);
+  padding: 4px;
+
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.22),
+    0 8px 18px rgba(0,0,0,0.35);
+}
+
+.brand-text h1 {
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  color: #eef2f7;
+}
+
+.brand-text span {
+  display: block;
+  font-size: 0.7rem;
+  color: #9aa3b2;
+}
+
+/* =========================================
+   NAV LINKS - Base
+   ========================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Base pill style for both links and buttons in nav */
+.nav-links a,
+.nav-links button {
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.88rem;
+  text-decoration: none;
+  color: #d1d5db;
+
+  padding: 0 0.85rem;
+
+  border-radius: 999px;
+  border: 1px solid transparent;
+
+  background: rgba(255,255,255,0.03);
+
+  transition: 0.18s ease;
+  white-space: nowrap;
+}
+
+/* Hover for nav pills */
+.nav-links a:hover,
+.nav-links button:hover {
+  background: rgba(148,163,184,0.08);
+  border-color: rgba(148, 163, 184, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Active link */
+.nav-links a.active {
+  background: rgba(16, 185, 129, 0.18);
+  color: #d1fae5;
+  border-color: rgba(16, 185, 129, 0.35);
+  font-weight: 700;
+}
+
+/* =========================================
+   Ghost base (used by lang-btn)
+   ========================================= */
+
+.btn-ghost {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(2, 6, 23, 0.35);
+  color: #e5e7eb;
+  font-weight: 600;
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.btn-ghost:hover {
+  border-color: rgba(96,165,250,0.55);
+  background:
+    linear-gradient(135deg, rgba(96,165,250,0.14), rgba(56,189,248,0.08));
+}
+
+/* =========================================
+   Language button - Premium Toggle
+   ========================================= */
+
+.lang-btn {
+  height: 34px;
+  min-width: 72px;
+
+  padding: 0 0.9rem;
+
+  border-radius: 12px; 
+
+  letter-spacing: 0.3px;
+  font-size: 0.82rem;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* spacing next to links */
+.nav-links .lang-btn {
+  margin-inline-end: 4px;
+}
+
+/* =========================================
+   Special buttons in nav
+   Keep your existing identity but aligned
+   ========================================= */
+
+/* Add Employee button */
+.btn-add-employee {
+  font-size: 0.85rem;
+  text-decoration: none;
+
+  height: 34px;
+  padding: 0 0.95rem;
+
+  border-radius: 999px;
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.12);
+  color: #d1fae5;
+
+  transition: 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-add-employee:hover {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.75);
+  transform: translateY(-1px);
+}
+
+.active-add {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.75);
+  font-weight: 700;
+}
+
+/* Register button */
+.btn-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  height: 34px;
+  padding: 0 1rem;
+
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 650;
+  font-size: 0.85rem;
+
+  border: 1px solid rgba(59, 130, 246, 0.45);
+  background: rgba(59, 130, 246, 0.12);
+  color: #dbeafe;
+
+  transition: 0.15s ease;
+}
+
+.btn-register:hover {
+  background: rgba(59, 130, 246, 0.22);
+  border-color: rgba(59, 130, 246, 0.75);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.active-register {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.9);
+  font-weight: 700;
+}
+
+/* =========================================
+   USER AREA
+   ========================================= */
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  padding-left: 1rem;
+  border-left: 1px solid rgba(148,163,184,0.18);
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: #e5e7eb;
+}
+
+.user-role {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #bfdbfe;
+}
+
+/* Logout button */
+.btn-logout {
+  height: 32px;
+  padding: 0 0.85rem;
+
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: rgba(255,255,255,0.02);
+
+  color: #e5e7eb;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  transition: 0.15s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(185, 28, 28, 0.22);
+  border-color: rgba(248, 113, 113, 0.65);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Login button */
+.btn-login {
+  height: 34px;
+  padding: 0 0.95rem;
+
+  border-radius: 999px;
+  border: 1px solid rgba(16, 185, 129, 0.45);
+
+  background: rgba(16, 185, 129, 0.12);
+  color: #d1fae5;
+
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  transition: 0.15s ease;
+}
+
+.btn-login:hover {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.75);
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 992px) {
+  .app-header {
+    padding: 0.75rem 1.1rem;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    height: 36px;
+  }
+
+  .lang-btn {
+    border-radius: 10px;
+  }
+
+  .brand-text h1 {
+    font-size: 0.98rem;
+  }
+
+  .user-area {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+/* ===== Language Button - Special Chip ===== */
+.lang-btn{
+  height: 34px;
+  padding: 0 0.95rem;
+  border-radius: 12px;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: .4px;
+
+  color: #eaf2ff;
+
+  border: 1px solid rgba(99,102,241,0.45);
+  background:
+    linear-gradient(135deg, rgba(99,102,241,0.22), rgba(56,189,248,0.16));
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.28),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: .18s ease;
+}
+
+.lang-btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(99,102,241,0.75);
+  filter: brightness(1.05);
+}
+
+.lang-btn:active{
+  transform: translateY(0);
+}
